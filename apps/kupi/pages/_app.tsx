@@ -8,7 +8,8 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <Fragment>
       <Head>
-        <title>Welcome to kupi!</title>
+        <title>Welcome to Kupi!</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
       </Head>
       <main className="app">

@@ -12,15 +12,12 @@
 
   font-size: 3rem /* 48px */;
   line-height: 1;
+  display: block;
+  color: var(--text-purple);
 }
 
 .title1 {
   color: rgba(249, 250, 251, 1);
-}
-
-.title2 {
-  display: block;
-  color: var(--text-purple);
 }
 
 .subtitle {
