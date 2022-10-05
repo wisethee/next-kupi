@@ -64,6 +64,23 @@ button:focus {
   border: 1px solid #fff;
 }
 
+.glass-container {
+  // width: 700px;
+  // height: 375px;
+  color: white;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // gap: 20px;
+  border-radius: 24px;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 191, 255, 0.26);
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+  border: 0px rgba(255, 255, 255, 0.4) solid;
+  border-bottom: 0px rgba(40, 40, 40, 0.35) solid;
+  border-right: 0px rgba(40, 40, 40, 0.35) solid;
+}
+
 :root {
   --text-purple: rgba(67, 56, 202, 1);
   --text-purple-dark: rgba(79, 70, 229, 1);
