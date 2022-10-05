@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Banner from '../components/banner/banner';
 import Card from '../components/card/card';
 
+import coffeeStores from '../coffee-stores.json';
+
 import styles from '../styles/home.module.scss';
 
 export function Index() {
@@ -17,21 +19,12 @@ export function Index() {
         <Image src="/hero.svg" alt="hero" width="300%" height="300%" />
       </div>
       <div className={styles.cardLayout}>
-        <Card
-          name="Dark Horse Coffee"
-          href="coffee-store/1"
-          imgUrl="/background.png"
-        />
-        <Card
-          name="Dark Horse Coffee"
-          href="coffee-store/1"
-          imgUrl="/background.png"
-        />
-        <Card
-          name="Dark Horse Coffee"
-          href="coffee-store/1"
-          imgUrl="/background.png"
-        />
+        {coffeeStores.map((store) => {
+          const { id, imgUrl, name } = store;
+          return (
+            <Card key={id} href={`coffee-store/${id}`} imgUrl="" name={name} />
+          );
+        })}
       </div>
     </div>
   );
