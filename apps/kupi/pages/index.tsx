@@ -22,7 +22,12 @@ export function Index() {
         {coffeeStores.map((store) => {
           const { id, imgUrl, name } = store;
           return (
-            <Card key={id} href={`coffee-store/${id}`} imgUrl="" name={name} />
+            <Card
+              key={id}
+              href={`coffee-store/${id}`}
+              imgUrl={imgUrl}
+              name={name}
+            />
           );
         })}
       </div>
