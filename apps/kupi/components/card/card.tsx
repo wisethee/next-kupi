@@ -7,7 +7,7 @@ const Card = ({ name, imgUrl, href }) => {
   return (
     <Link href={href}>
       <a className={styles.cardLink}>
-        <div className={classNames('glass-container', styles.container)}>
+        <div className={classNames('glass', styles.container)}>
           <div className={styles.cardHeaderWrapper}>
             <h2 className={styles.cardHeader}>{name}</h2>
           </div>

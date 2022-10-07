@@ -1,16 +1,121 @@
+import classNames from 'classnames';
+import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { Fragment } from 'react';
 
-const CoffeeStore = () => {
+import coffeeStores from '../../coffee-stores.json';
+
+import styles from '../../styles/store.module.scss';
+
+export const getStaticProps = async ({ params }) => {
+  const { id } = params;
+  console.log(typeof id);
+
+  return {
+    props: {
+      coffeeStore: coffeeStores.find(
+        (store) => store.id.toLocaleString() === id
+      ),
+    },
+  };
+};
+
+export const getStaticPaths = async () => {
+  const data = coffeeStores;
+
+  const paths = data.map((shop) => ({
+    params: { id: `${shop.id}` },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+const CoffeeStore = (props) => {
+  const { name, imgUrl, address, neighbourhood } = props.coffeeStore;
   const router = useRouter();
-  const { id } = router.query;
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
+  const handleUpvoteButton = () => {
+    return;
+  };
 
   return (
-    <div>
-      Coffee Store page. The page id is: {id}
-      <Link href="/">Back to home</Link>
-    </div>
+    <Fragment>
+      <Head>
+        <title>{name}</title>
+        <meta property="og:title" content={name} key="title" />
+      </Head>
+
+      <div className={styles.layout}>
+        <div className={styles.container}>
+          <div className={styles.col1}>
+            <div className={styles.backToHomeLink}>
+              <Link href="/">
+                <a>Back to home</a>
+              </Link>
+            </div>
+
+            <div className={styles.nameWrapper}>
+              <h1 className={styles.name}>{name}</h1>
+            </div>
+
+            <Image
+              className={styles.storeImg}
+              src={imgUrl}
+              width="600px"
+              height="360px"
+              alt={`${name}`}
+            />
+          </div>
+
+          <div className={classNames(styles.col2, 'glass')}>
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/places.svg"
+                width="24px"
+                height="24px"
+                alt={`${name} Image`}
+              />
+              <p className={styles.text}>{address}</p>
+            </div>
+
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/nearMe.svg"
+                width="24px"
+                height="24px"
+                alt={`${name} Image`}
+              />
+              <p className={styles.text}>{neighbourhood}</p>
+            </div>
+
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/star.svg"
+                width="24px"
+                height="24px"
+                alt={`${name} Image`}
+              />
+              <p className={styles.text}>112</p>
+            </div>
+            <button
+              className={styles.upvoteButton}
+              onClick={handleUpvoteButton}
+            >
+              Up vote!
+            </button>
+          </div>
+        </div>
+      </div>
+    </Fragment>
   );
 };
 
