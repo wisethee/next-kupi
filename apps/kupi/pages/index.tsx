@@ -13,6 +13,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
+// Home component
 export function Index(props) {
   const handleOnBannerButton = () => console.log('banner button clicker');
 
