@@ -16,6 +16,8 @@ export const getStaticProps = async (context) => {
 export function Index(props) {
   const handleOnBannerButton = () => console.log('banner button clicker');
 
+  console.log('marius changes');
+
   return (
     <div className="container">
       <Banner
