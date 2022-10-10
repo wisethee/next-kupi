@@ -2,14 +2,14 @@ import Image from 'next/image';
 import Banner from '../components/banner/banner';
 import Card from '../components/card/card';
 
-import coffeeStores from '../coffee-stores.json';
-
 import styles from '../styles/home.module.scss';
 import { Fragment } from 'react';
+import { fetchCoffeeStores } from '../lib/coffee-stores';
 
 export const getStaticProps = async (context) => {
+  const coffeeStores = await fetchCoffeeStores();
   return {
-    props: { coffeeStores },
+    props: { coffeeStores: coffeeStores },
   };
 };
 
@@ -31,19 +31,22 @@ export function Index(props) {
         />
       </div>
 
-      {coffeeStores.length > 0 && (
+      {props.coffeeStores.length > 0 && (
         <Fragment>
           <h2 className={styles.heading2}>Coffee Stores</h2>
         </Fragment>
       )}
       <div className={styles.cardLayout}>
         {props.coffeeStores.map((store) => {
-          const { id, imgUrl, name } = store;
+          const { fsq_id, imgUrl, name } = store;
           return (
             <Card
-              key={id}
-              href={`coffee-store/${id}`}
-              imgUrl={imgUrl}
+              key={fsq_id}
+              href={`coffee-store/${fsq_id}`}
+              imgUrl={
+                imgUrl ||
+                'https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80'
+              }
               name={name}
             />
           );
