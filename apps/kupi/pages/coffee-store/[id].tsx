@@ -16,7 +16,7 @@ export const getStaticProps = async ({ params }) => {
   return {
     props: {
       coffeeStore: coffeeStores.find(
-        (store) => store.fsq_id.toLocaleString() === id
+        (store) => store.id.toLocaleString() === id
       ),
     },
   };
@@ -26,7 +26,7 @@ export const getStaticPaths = async () => {
   const data = await fetchCoffeeStores();
 
   const paths = data.map((shop) => ({
-    params: { id: `${shop.fsq_id}` },
+    params: { id: `${shop.id}` },
   }));
 
   return {
@@ -36,8 +36,7 @@ export const getStaticPaths = async () => {
 };
 
 const CoffeeStore = (props) => {
-  const { name, imgUrl, location } = props.coffeeStore;
-  const { address, locality } = location;
+  const { name, imgUrl, address, locality } = props.coffeeStore;
   const router = useRouter();
 
   if (router.isFallback) {
@@ -60,7 +59,7 @@ const CoffeeStore = (props) => {
           <div className={styles.col1}>
             <div className={styles.backToHomeLink}>
               <Link href="/">
-                <a>Back to home</a>
+                <a>← Back to home</a>
               </Link>
             </div>
 
@@ -70,10 +69,7 @@ const CoffeeStore = (props) => {
 
             <Image
               className={styles.storeImg}
-              src={
-                imgUrl ||
-                'https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80'
-              }
+              src={imgUrl}
               width="600px"
               height="360px"
               alt={`${name}`}

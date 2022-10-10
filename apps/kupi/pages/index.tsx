@@ -38,15 +38,12 @@ export function Index(props) {
       )}
       <div className={styles.cardLayout}>
         {props.coffeeStores.map((store) => {
-          const { fsq_id, imgUrl, name } = store;
+          const { id, imgUrl, name } = store;
           return (
             <Card
-              key={fsq_id}
-              href={`coffee-store/${fsq_id}`}
-              imgUrl={
-                imgUrl ||
-                'https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80'
-              }
+              key={id}
+              href={`coffee-store/${id}`}
+              imgUrl={imgUrl}
               name={name}
             />
           );
