@@ -2,14 +2,14 @@ import Image from 'next/image';
 import Banner from '../components/banner/banner';
 import Card from '../components/card/card';
 
-import coffeeStores from '../coffee-stores.json';
-
 import styles from '../styles/home.module.scss';
 import { Fragment } from 'react';
+import { fetchCoffeeStores } from '../lib/coffee-stores';
 
 export const getStaticProps = async (context) => {
+  const coffeeStores = await fetchCoffeeStores();
   return {
-    props: { coffeeStores },
+    props: { coffeeStores: coffeeStores },
   };
 };
 
@@ -31,7 +31,7 @@ export function Index(props) {
         />
       </div>
 
-      {coffeeStores.length > 0 && (
+      {props.coffeeStores.length > 0 && (
         <Fragment>
           <h2 className={styles.heading2}>Coffee Stores</h2>
         </Fragment>

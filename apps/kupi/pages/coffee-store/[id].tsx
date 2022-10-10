@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment } from 'react';
 
-import coffeeStores from '../../coffee-stores.json';
+import { fetchCoffeeStores } from '../../lib/coffee-stores';
 
 import styles from '../../styles/store.module.scss';
 
 export const getStaticProps = async ({ params }) => {
   const { id } = params;
-  console.log(typeof id);
+  const coffeeStores = await fetchCoffeeStores();
 
   return {
     props: {
@@ -23,7 +23,7 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
-  const data = coffeeStores;
+  const data = await fetchCoffeeStores();
 
   const paths = data.map((shop) => ({
     params: { id: `${shop.id}` },
@@ -36,7 +36,7 @@ export const getStaticPaths = async () => {
 };
 
 const CoffeeStore = (props) => {
-  const { name, imgUrl, address, neighbourhood } = props.coffeeStore;
+  const { name, imgUrl, address, locality } = props.coffeeStore;
   const router = useRouter();
 
   if (router.isFallback) {
@@ -59,7 +59,7 @@ const CoffeeStore = (props) => {
           <div className={styles.col1}>
             <div className={styles.backToHomeLink}>
               <Link href="/">
-                <a>Back to home</a>
+                <a>← Back to home</a>
               </Link>
             </div>
 
@@ -94,7 +94,7 @@ const CoffeeStore = (props) => {
                 height="24px"
                 alt={`${name} Image`}
               />
-              <p className={styles.text}>{neighbourhood}</p>
+              <p className={styles.text}>{locality}</p>
             </div>
 
             <div className={styles.iconWrapper}>
