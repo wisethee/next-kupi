@@ -5,28 +5,28 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment } from 'react';
 
-import coffeeStores from '../../coffee-stores.json';
+import { fetchCoffeeStores } from '../../lib/coffee-stores';
 
 import styles from '../../styles/store.module.scss';
 
 export const getStaticProps = async ({ params }) => {
   const { id } = params;
-  console.log(typeof id);
+  const coffeeStores = await fetchCoffeeStores();
 
   return {
     props: {
       coffeeStore: coffeeStores.find(
-        (store) => store.id.toLocaleString() === id
+        (store) => store.fsq_id.toLocaleString() === id
       ),
     },
   };
 };
 
 export const getStaticPaths = async () => {
-  const data = coffeeStores;
+  const data = await fetchCoffeeStores();
 
   const paths = data.map((shop) => ({
-    params: { id: `${shop.id}` },
+    params: { id: `${shop.fsq_id}` },
   }));
 
   return {
@@ -36,7 +36,8 @@ export const getStaticPaths = async () => {
 };
 
 const CoffeeStore = (props) => {
-  const { name, imgUrl, address, neighbourhood } = props.coffeeStore;
+  const { name, imgUrl, location } = props.coffeeStore;
+  const { address, locality } = location;
   const router = useRouter();
 
   if (router.isFallback) {
@@ -69,7 +70,10 @@ const CoffeeStore = (props) => {
 
             <Image
               className={styles.storeImg}
-              src={imgUrl}
+              src={
+                imgUrl ||
+                'https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80'
+              }
               width="600px"
               height="360px"
               alt={`${name}`}
@@ -94,7 +98,7 @@ const CoffeeStore = (props) => {
                 height="24px"
                 alt={`${name} Image`}
               />
-              <p className={styles.text}>{neighbourhood}</p>
+              <p className={styles.text}>{locality}</p>
             </div>
 
             <div className={styles.iconWrapper}>
